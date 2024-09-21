@@ -8,6 +8,7 @@ use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\SendResetLinkRequest;
 use App\Mail\AdminPasswordResetmailSendLink;
 use App\Models\Admin;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -17,7 +18,7 @@ class AuthenticationController extends Controller
 {
     public function login()
     {
-        return view('admin.auth.login');
+        return view('admin.auth.login',);
     }
 
     public function handleLogin(HandleAdminLogin $request)

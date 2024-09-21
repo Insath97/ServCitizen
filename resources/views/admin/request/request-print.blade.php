@@ -130,7 +130,7 @@
         <div class="header-section">
             <img src="{{ asset('images/images.png') }}" alt="Logo">
             <p class="office-name">Divisional Secretariat Office</p>
-            <p class="sm">{{ $setting['site_office_name'] }}</p>
+            <p class="sm">{{ @$setting['site_office_name'] }}</p>
         </div>
 
         <!-- Token Number Section -->
@@ -264,7 +264,7 @@
             {{ now()->setTimezone('Asia/Colombo')->format('D, M j, Y • h:i:s A') }}</p>
         <div class="thank-you">Thank you for coming!</div>
         <p style="text-align: center; font-size: 9px; margin-top: 5px;">
-            Developed by <strong> {{ $setting['site_company_name'] }}</strong>
+            Developed by <strong> {{ @$setting['site_company_name'] }}</strong>
         </p>
     </div>
 </body>

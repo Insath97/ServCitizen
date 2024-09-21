@@ -2,7 +2,7 @@
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
             <a href="{{ route('admin.dashboard') }}" class="text-left ml-n3"
-                style="text-transform: none; font-size: 1.3rem;">{{ $setting['site_name'] }}</a>
+                style="text-transform: none; font-size: 1.3rem;">{{ @$setting['site_name'] }}</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="{{ route('admin.dashboard') }}">SC</a>

@@ -24,7 +24,7 @@
 
         <div class="form-group">
             <label>Version</label>
-            <input type="text" name="site_footer_version" value="" class="form-control @error('site_footer_version') is-invalid @enderror"
+            <input type="text" name="site_footer_version" value="{{ @$setting['site_footer_version'] }}" class="form-control @error('site_footer_version') is-invalid @enderror"
                 id="name">
             @error('site_footer_version')
                 <div class="invalid-feedback">{{ $message }}</div>

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Setting;
+use App\Models\SettingInfo;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         /* use any wahere in system */
-        $setting = Setting::pluck('value','key')->toArray();
+        $setting = SettingInfo::pluck('value','key')->toArray();
 
         View::composer('*', function ($view) use ($setting) {
             $view->with('setting', $setting);

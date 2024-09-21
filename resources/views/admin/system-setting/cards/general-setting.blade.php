@@ -6,7 +6,7 @@
 
         <div class="form-group">
             <label>System Name</label>
-            <input type="text" name="site_name" value="{{ $setting['site_name'] }}"
+            <input type="text" name="site_name" value="{{ @$setting['site_name'] }}"
                 class="form-control @error('site_name') is-invalid @enderror" id="name">
             @error('site_name')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -15,7 +15,7 @@
 
         <div class="form-group">
             <label>DS Office Name</label>
-            <input type="text" name="site_office_name" value="{{ $setting['site_office_name'] }}"
+            <input type="text" name="site_office_name" value="{{ @$setting['site_office_name'] }}"
                 class="form-control @error('site_office_name') is-invalid @enderror" id="name">
             @error('site_office_name')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -24,7 +24,7 @@
 
         <div class="form-group">
             <label>System Mail</label>
-            <input type="text" name="site_office_mail" value="{{ $setting['site_office_mail'] }}"
+            <input type="text" name="site_office_mail" value="{{ @$setting['site_office_mail'] }}"
                 class="form-control @error('site_office_mail') is-invalid @enderror" id="name">
             @error('site_office_mail')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -33,7 +33,7 @@
 
         <div class="form-group">
             <label>Company Name</label>
-            <input type="text" name="site_company_name" value="{{ $setting['site_company_name'] }}"
+            <input type="text" name="site_company_name" value="{{ @$setting['site_company_name'] }}"
                 class="form-control @error('site_company_name') is-invalid @enderror" id="name">
             @error('site_company_name')
                 <div class="invalid-feedback">{{ $message }}</div>

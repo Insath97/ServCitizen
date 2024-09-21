@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Login &mdash; {{ $setting['site_name'] }}</title>
+    <title>Login &mdash; {{ @$setting['site_name'] }}</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('admin/assets/modules/bootstrap/css/bootstrap.min.css') }}">
@@ -81,7 +81,8 @@
             }
 
             .login-image {
-                display: none; /* Hide image on small screens */
+                display: none;
+                /* Hide image on small screens */
             }
 
             .login-form {
@@ -102,7 +103,7 @@
                 <div class="login-form">
                     <div class="login-brand text-center" style="margin-top: 40px;">
                         <img src="{{ asset('images/logo.png') }}" alt="logo">
-                        <p class="mt-3">DS OFFICE - {{ $setting['site_office_name'] }}</p>
+                        <p class="mt-3">DS OFFICE - {{ @$setting['site_office_name'] }}</p>
                     </div>
                     <div class="" style="margin-top: -40px;">
                         <div class="">
@@ -120,11 +121,13 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('admin.handle-login') }}" class="needs-validation" novalidate="">
+                            <form method="POST" action="{{ route('admin.handle-login') }}" class="needs-validation"
+                                novalidate="">
                                 @csrf
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
+                                    <input id="email" type="email" class="form-control" name="email"
+                                        tabindex="1" required autofocus>
                                     <div class="invalid-feedback">Please fill in your email</div>
                                     @error('email')
                                         <code>{{ $message }}</code>
@@ -134,9 +137,11 @@
                                 <div class="form-group">
                                     <label for="password" class="control-label">Password</label>
                                     <div class="float-right">
-                                        <a href="{{ route('admin.forgot-password') }}" class="text-small">Forgot Password?</a>
+                                        <a href="{{ route('admin.forgot-password') }}" class="text-small">Forgot
+                                            Password?</a>
                                     </div>
-                                    <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                                    <input id="password" type="password" class="form-control" name="password"
+                                        tabindex="2" required>
                                     <div class="invalid-feedback">Please fill in your password</div>
                                     @error('password')
                                         <code>{{ $message }}</code>
@@ -145,13 +150,15 @@
 
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
+                                        <input type="checkbox" name="remember" class="custom-control-input"
+                                            tabindex="3" id="remember-me">
                                         <label class="custom-control-label" for="remember-me">Remember Me</label>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">Login</button>
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block"
+                                        tabindex="4">Login</button>
                                 </div>
                             </form>
                         </div>
@@ -159,7 +166,8 @@
                 </div>
             </div>
             <div class="simple-footer text-center text-muted small">
-                Powered by DS Office {{ $setting['site_office_name'] }} &copy; {{ date('Y') }} <div class="bullet"></div> Developed By
+                Powered by DS Office {{ @$setting['site_office_name'] }} &copy; {{ date('Y') }} <div
+                    class="bullet"></div> Developed By
                 <a href="https://github.com/Insath97" target="_blank">Mohamed Insath</a>
             </div>
         </section>
