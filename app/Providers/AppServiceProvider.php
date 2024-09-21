@@ -20,13 +20,5 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
-        /* use any wahere in system */
-        $setting = SettingInfo::pluck('value','key')->toArray();
-
-        View::composer('*', function ($view) use ($setting) {
-            $view->with('setting', $setting);
-        });
-    }
+    public function boot(): void {}
 }

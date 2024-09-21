@@ -3,6 +3,7 @@
 /* make side bar active */
 
 use App\Models\Payment;
+use App\Models\SettingInfo;
 use App\Models\SubService;
 use Carbon\Carbon;
 
@@ -70,4 +71,10 @@ function createSubService($request, $service_code)
     $sub_service->r_time_type = $request->r_time_type;
 
     $sub_service->save();
+}
+
+function getSettingInfo($key)
+{
+    $setting_info = SettingInfo::where('key', $key)->first();
+    return $setting_info ? $setting_info->value : null;
 }

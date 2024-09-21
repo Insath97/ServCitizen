@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Login &mdash; {{ @$setting['site_name'] }}</title>
+    <title>Login &mdash; {{ getSettingInfo('site_name') }}</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('admin/assets/modules/bootstrap/css/bootstrap.min.css') }}">
@@ -103,7 +103,7 @@
                 <div class="login-form">
                     <div class="login-brand text-center" style="margin-top: 40px;">
                         <img src="{{ asset('images/logo.png') }}" alt="logo">
-                        <p class="mt-3">DS OFFICE - {{ @$setting['site_office_name'] }}</p>
+                        <p class="mt-3">DS OFFICE - {{ getSettingInfo('site_office_name') }}</p>
                     </div>
                     <div class="" style="margin-top: -40px;">
                         <div class="">
@@ -166,9 +166,9 @@
                 </div>
             </div>
             <div class="simple-footer text-center text-muted small">
-                Powered by DS Office {{ @$setting['site_office_name'] }} &copy; {{ date('Y') }} <div
+                Powered by DS Office {{ getSettingInfo('site_office_name') }} &copy; {{ date('Y') }} <div
                     class="bullet"></div> Developed By
-                <a href="https://github.com/Insath97" target="_blank">Mohamed Insath</a>
+                <a href="https://github.com/Insath97" target="_blank">{{ getSettingInfo('site_company_name') }}</a>
             </div>
         </section>
     </div>

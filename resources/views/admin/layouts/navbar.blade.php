@@ -4,7 +4,7 @@
     <ul class="navbar-nav navbar-right">
         <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
         <div class="d-none d-md-block text-center flex-grow-1">
-            <h4 class="nav-link mb-0">Divisional Secretariat - {{ @$setting['site_office_name'] }}</h4>
+            <h4 class="nav-link mb-0">Divisional Secretariat - {{ getSettingInfo('site_office_name') }}</h4>
         </div>
     </ul>
 
