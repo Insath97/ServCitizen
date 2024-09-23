@@ -70,6 +70,9 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
+        },
+        "php": {
+            "max_execution_time": "120"
         }
     },
     "minimum-stability": "stable",
