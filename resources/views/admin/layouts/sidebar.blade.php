@@ -54,7 +54,7 @@
                 <li class="{{ setSidebarActive(['admin.activity.*']) }}">
                     <a class="nav-link" href="{{ route('admin.activity.index') }}">
                         <i class="fas fa-network-wired"></i>
-                        <span>Working Progress</span>
+                        <span>Working in Progress</span>
                     </a>
                 </li>
             @endif

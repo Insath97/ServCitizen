@@ -57,7 +57,7 @@ class ClientController extends Controller
     public function store(ClientCreateRequest $request)
     {
         $client = new Client();
-        $client->name = $request->name;
+        $client->name = $request->name; 
         $client->nic = $request->nic;
 
         /* create client number */
@@ -80,8 +80,10 @@ class ClientController extends Controller
 
         $client->save();
 
-        toast('New Client Added Successfully', 'success')->width(400);
-        return redirect()->route('admin.client.index');
+        return response()->json([
+            'success' => 'Client created successfully.',
+            'redirect' => route('admin.client.index') // Redirect URL
+        ]);
     }
 
     public function show(string $id) {}

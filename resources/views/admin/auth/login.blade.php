@@ -103,11 +103,12 @@
                 <div class="login-form">
                     <div class="login-brand text-center" style="margin-top: 40px;">
                         <img src="{{ asset('images/logo.png') }}" alt="logo">
-                        <p class="mt-3">DS OFFICE - {{ getSettingInfo('site_office_name') }}</p>
+                        <p class="mt-3" style="font-weight: bold;">DS OFFICE -
+                            {{ getSettingInfo('site_office_name') }}</p>
+
                     </div>
                     <div class="" style="margin-top: -40px;">
                         <div class="">
-                            <h3 class="text-center">Login</h3>
                         </div>
                         <div class="">
                             @if (session()->has('success'))
@@ -167,7 +168,7 @@
             </div>
             <div class="simple-footer text-center text-muted small">
                 Powered by DS Office {{ getSettingInfo('site_office_name') }} &copy; {{ date('Y') }} <div
-                    class="bullet"></div> Developed By
+                    class="bullet"></div> Sytem Designed & Developed By
                 <a href="https://github.com/Insath97" target="_blank">{{ getSettingInfo('site_company_name') }}</a>
             </div>
         </section>
