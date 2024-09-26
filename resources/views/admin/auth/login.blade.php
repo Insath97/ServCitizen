@@ -103,7 +103,7 @@
                 <div class="login-form">
                     <div class="login-brand text-center" style="margin-top: 40px;">
                         <img src="{{ asset('images/logo.png') }}" alt="logo">
-                        <p class="mt-3" style="font-weight: bold;">DS OFFICE -
+                        <p class="mt-3" style="font-weight: bold;">MS OFFICE -
                             {{ getSettingInfo('site_office_name') }}</p>
 
                     </div>
