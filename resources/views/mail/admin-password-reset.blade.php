@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Password Reset - DS Connect</title>
+    <title>Password Reset - {{ getSettingInfo('site_name') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -46,9 +46,12 @@
         <div class="content">
             <h2>Password Reset Request</h2>
             <p>Hello,</p>
-            <p>We received a request to reset your password for your DS Office account. You can reset your password by clicking the link below:</p>
-            <a href="{{ route('admin.reset-password',['token' => $token,'email' => $email]) }}" target="_blank" class="button text-white">Reset your password</a>
-            <p>If you did not request a password reset, please ignore this email or contact support if you have concerns.</p>
+            <p>We received a request to reset your password for your DS Office account. You can reset your password by
+                clicking the link below:</p>
+            <a href="{{ route('admin.reset-password', ['token' => $token, 'email' => $email]) }}" target="_blank"
+                class="button text-white">Reset your password</a>
+            <p>If you did not request a password reset, please ignore this email or contact support if you have
+                concerns.</p>
             <p>Best regards,<br>DS Office Team</p>
         </div>
     </div>

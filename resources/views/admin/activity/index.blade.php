@@ -296,7 +296,7 @@
                             statusBadge.text(statusText);
                             statusBadge.css('background-color', statusColor);
 
-                            var newPhaseText = 'Calling Report';
+                            var newPhaseText = 'Open';
                             var currentPhaseCell = $('#current-phase-' + tokenId);
                             currentPhaseCell.text(newPhaseText);
 

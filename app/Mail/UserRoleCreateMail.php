@@ -33,7 +33,7 @@ class UserRoleCreateMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your Login Credentials for DS Connect',
+            subject: 'Your Login Credentials for ServCitizen',
         );
     }
 

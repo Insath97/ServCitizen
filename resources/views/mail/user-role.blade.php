@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>DS Connect</title>
+    <title>ServCitizen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -48,11 +48,10 @@
             <p>Your account has been created successfully. Here are your login credentials:</p>
             <p><strong>Email:</strong> {{ $mail }}</p>
             <p><strong>Password:</strong> {{ $password }}</p>
-            <a href="{{ route(admin.login) }}" class="button">{{ __('Login to your account') }}</a>
+            <a href="{{ route('admin.login') }}" class="button">Login to your account</a>
             <p>If you have any questions, feel free to reply to this email.</p>
-            <p>Best regards,<br>DS Office - {{ $setting['site_name'] }}</p>
+            <p>Best regards,<br>DS Office - {{ getSettingInfo('site_name') }}</p>
         </div>
     </div>
 </body>
-
 </html>
