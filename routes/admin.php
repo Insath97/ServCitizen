@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\ComplaintController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\DivisionController as AdminDivisionController;
@@ -137,8 +138,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
     Route::resource('activity', ActivityController::class);
 
     /* system setting */
-    Route::get('setting',[SettingController::class,'index'])->name('setting.index');
+    Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('general-setting', [SettingController::class, 'generalUpdate'])->name('general-setting.update');
-    Route::put('appearance',[SettingController::class,'appearanceUpdate'])->name('appearance.update');
-    Route::put('version',[SettingController::class,'versionUpdate'])->name('version.update');
+    Route::put('appearance', [SettingController::class, 'appearanceUpdate'])->name('appearance.update');
+    Route::put('version', [SettingController::class, 'versionUpdate'])->name('version.update');
+
+    /* compalint */
+    Route::resource('complaint', ComplaintController::class);
 });

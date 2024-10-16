@@ -35,6 +35,14 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="menu-header">Complaint Section</li>
+                <li class="{{ setSidebarActive(['admin.complaint.*']) }}">
+                    <a class="nav-link" href="{{ route('admin.complaint.index') }}">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Complaints</span>
+                    </a>
+                </li>
             @endif
 
             {{-- payment section --}}
