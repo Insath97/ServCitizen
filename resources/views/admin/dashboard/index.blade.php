@@ -84,7 +84,7 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Cash Recieved Tokens</h4>
+                                <h4>Today Cash Recieved Tokens</h4>
                             </div>
                             <div class="card-body">
                                 {{ $paid_tokens }}
