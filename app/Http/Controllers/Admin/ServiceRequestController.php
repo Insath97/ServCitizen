@@ -40,8 +40,8 @@ class ServiceRequestController extends Controller
             'sub_service'
         ])
             ->where('delete_status', 1)
-            ->orderByRaw("FIELD(payment_status, 'Free') DESC") // Free tokens will come first
-            ->orderBy('created_at', 'desc')
+            // ->orderByRaw("FIELD(payment_status, 'Free') DESC") // Free tokens will come first
+            // ->orderBy('created_at', 'desc')
             ->orderBy('id', 'desc')
             ->get();
 
