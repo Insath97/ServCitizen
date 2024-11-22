@@ -93,15 +93,32 @@
                     </div>
                 </div>
 
-                {{-- total revenue --}}
+                {{-- today revenue --}}
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
-                        <div class="card-icon bg-danger">
+                        <div class="card-icon bg-warning">
                             <i class="fas fa-wallet"></i>
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Total Cash Recieved</h4>
+                                <h4>Today Cash Recieved</h4>
+                            </div>
+                            <div class="card-body">
+                                Rs.{{ $today_amount_total }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- total revenue --}}
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-danger">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Total Cash Recieved (This Month)</h4>
                             </div>
                             <div class="card-body">
                                 Rs.{{ $todal_amount }}

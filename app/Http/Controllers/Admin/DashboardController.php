@@ -16,11 +16,13 @@ class DashboardController extends Controller
     {
         $startOfDay = Carbon::today();
         $endOfDay = Carbon::tomorrow();
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
 
         $today_request = ModelsRequest::whereBetween('created_at', [$startOfDay, $endOfDay])->count();
         $total_clients = Client::count();
-        $today_amount_total = Payment::where('created_at', Carbon::today())->sum('amount');
-        $todal_amount = Payment::all()->sum('amount');
+        $today_amount_total = Payment::whereBetween('created_at', [$startOfDay, $endOfDay])->sum('amount');
+        $todal_amount = Payment::whereBetween('created_at', [$startOfMonth, $endOfMonth])->sum('amount');
         $free_tokens = ModelsRequest::where('payment_status', 'free')->count();
         $paid_tokens = ModelsRequest::where('payment_status', 'paid')->count();
         $non_free_tokens = ModelsRequest::where('payment_status', '!=', 'free')->count();
@@ -34,6 +36,6 @@ class DashboardController extends Controller
             'colors' => $statuses->pluck('status_color')
         ];
 
-        return view('admin.dashboard.index', compact('free_tokens', 'non_free_tokens', 'today_request', 'total_clients', 'todal_amount', 'paid_tokens', 'chartData'));
+        return view('admin.dashboard.index', compact('free_tokens', 'non_free_tokens', 'today_request', 'total_clients', 'todal_amount', 'today_amount_total' , 'paid_tokens', 'chartData'));
     }
 }
