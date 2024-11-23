@@ -498,6 +498,11 @@
 
                             // Update status badge
                             var tokenId = $('#token-id').val();
+
+                            var newPhaseText = 'Final Decision';
+                            var currentPhaseCell = $('#current-phase-' + tokenId);
+                            currentPhaseCell.text(newPhaseText);
+
                             var currentStatusName = response.data.status.status_name;
                             var currentStatusColor = response.data.status.status_color;
 
