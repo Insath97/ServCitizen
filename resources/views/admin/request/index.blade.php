@@ -71,6 +71,7 @@
                                                 data-service_name="{{ $item->main_service->name }}"
                                                 data-service_type="{{ $item->main_service->service_type->name }}"
                                                 data-status_name="{{ $item->status->status_name }}"
+                                                data-remarks="{{ $item->status_history()->latest()->first()->feedback ?? 'No feedback available';  }}"
                                                 data-status_color="{{ $item->status->status_color }}"
                                                 data-created_at="{{ $item->created_at->format('Y-m-d H:i:s') }}"
                                                 @if ($item->main_service->have_sub_service == 0 && $item->sub_service) data-sub_service="{{ $item->sub_service->name }}"
@@ -189,6 +190,8 @@
                 $('#modal-status_name').val($(this).data('status_name'));
                 let status_color = $(this).data('status_color');
                 $('#modal-status_name').css('background-color', status_color);
+
+                $('#modal-feedback').val($(this).data('remarks'));
 
                 $('#modal-fees_type').val($(this).data('fees_type'));
                 $('#modal-amount').val($(this).data('amount') ? $(this).data('amount') : 'Free');

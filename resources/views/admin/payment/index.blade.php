@@ -176,15 +176,13 @@
             });
 
 
-            // Handle Payment Form Submission
             $('#payment-form').on('submit', function(event) {
                 event.preventDefault();
 
-                // Gather form data
                 var formData = $(this).serialize();
 
                 $.ajax({
-                    url: "{{ route('admin.payment.store') }}", // Ensure this route saves the payment and returns the request_id
+                    url: "{{ route('admin.payment.store') }}",
                     type: "POST",
                     data: formData,
                     success: function(response) {
@@ -198,7 +196,6 @@
                                 cancelButtonText: 'No, thanks'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    // Ensure response.request_id is available and points to the correct request
                                     var printRoute =
                                         "{{ route('admin.token.print', ':request_id') }}";
                                     printRoute = printRoute.replace(':request_id',
@@ -207,54 +204,39 @@
                                     // Open the print window with the correct request ID
                                     var printWindow = window.open(printRoute, '_blank',
                                         'width=600,height=800');
-
                                     printWindow.onload = function() {
-                                        // Automatically trigger print and close the window
                                         printWindow.print();
 
-                                        window.onafterprint = function() {
+                                        // Close the print window after printing
+                                        printWindow.onafterprint = function() {
                                             printWindow.close();
-                                            window.location
-                                        .reload(); // Reload the page after print
+                                            window.location.reload();
                                         };
 
-                                        // Fallback in case onafterprint does not work
+                                        // Fallback close mechanism
                                         setTimeout(function() {
                                             printWindow.close();
-                                            window.location
-                                        .reload(); // Reload the page after print
-                                        },
-                                        3000); // 3 seconds delay to ensure printing completes
+                                            window.location.reload();
+                                        }, 20000);
                                     };
                                 } else {
-                                    Swal.fire(
-                                        'Success!',
-                                        'Payment saved successfully.',
-                                        'success'
-                                    ).then(() => {
-                                        // Reload the page to reflect changes
-                                        location.reload();
-                                    });
+                                    Swal.fire('Success!', 'Payment saved successfully.',
+                                            'success')
+                                        .then(() => location.reload());
                                 }
                             });
                         } else {
-                            Swal.fire(
-                                'Error!',
-                                'There was an issue saving the payment.',
-                                'error'
-                            );
+                            Swal.fire('Error!', 'There was an issue saving the payment.',
+                                'error');
                         }
                     },
                     error: function(xhr) {
-                        console.error(xhr.responseText);
-                        Swal.fire(
-                            'Error!',
-                            'An error occurred while saving the payment.',
-                            'error'
-                        );
+                        Swal.fire('Error!', 'An error occurred while saving the payment.',
+                            'error');
                     }
                 });
             });
+
 
         });
     </script>

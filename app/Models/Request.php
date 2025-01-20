@@ -34,6 +34,11 @@ class Request extends Model
         return $this->belongsTo(SubService::class, 'sub_service_id');
     }
 
+    public function status_history()
+    {
+        return $this->hasMany(StatusHistory::class,'request_id');
+    }
+
     public function scopePaidServices($query)
     {
         return $query->whereHas('service', function ($query) {

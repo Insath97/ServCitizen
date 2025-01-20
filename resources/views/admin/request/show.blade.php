@@ -100,6 +100,13 @@
                         </div>
                     </div>
 
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="modal-feedback" class="col-form-label font-weight-bold">Remarks</label>
+                            <textarea class="form-control" id="modal-feedback" rows="3"></textarea>
+                        </div>
+                    </div>
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="modal-fees_type" class="col-form-label font-weight-bold">Fees Type</label>

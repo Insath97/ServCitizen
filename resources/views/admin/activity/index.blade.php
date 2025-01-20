@@ -108,19 +108,22 @@
                                             <div class="step-counter">1</div>
                                             <div class="step-name">Open</div>
                                         </div>
-                                        <div class="stepper-item" data-toggle="modal" data-target="#verification-form">
+                                        <div class="stepper-item" data-toggle="modal" data-target="#verification-form"
+                                            style="cursor: pointer;">
                                             <div class="step-counter">2</div>
                                             <div class="step-name">Document Verification</div>
                                         </div>
-                                        <div class="stepper-item" data-toggle="modal" data-target="#calling-form">
+                                        <div class="stepper-item" data-toggle="modal" data-target="#calling-form"
+                                            style="cursor: pointer;">
                                             <div class="step-counter">3</div>
                                             <div class="step-name">Calling Reports</div>
                                         </div>
-                                        <div class="stepper-item" data-toggle="modal" data-target="#final-decision-form">
+                                        <div class="stepper-item" data-toggle="modal" data-target="#final-decision-form"
+                                            style="cursor: pointer;">
                                             <div class="step-counter">4</div>
                                             <div class="step-name">Final Decision</div>
                                         </div>
-                                        <div class="stepper-item" data-target="#completed-form">
+                                        <div class="stepper-item" data-target="#completed-form" style="cursor: pointer;">
                                             <div class="step-counter">5</div>
                                             <div class="step-name">Completed</div>
                                         </div>
@@ -203,47 +206,52 @@
                             var status_id = response.token.status.id;
 
                             var current_phase = '';
-                            if (response.token.current_phase == 'open') {
+                            if (response.token.current_phase === 'open') {
                                 $('#progress-bar').css('width', '20%');
-                                current_phase = "open";
-                            } else if (response.token.current_phase ==
+                                current_phase = "Open";
+                            } else if (response.token.current_phase ===
                                 'document_verification') {
                                 $('#progress-bar').css('width', '40%');
                                 current_phase = "Document Verification";
-                            } else if (response.token.current_phase == 'calling_report') {
+                            } else if (response.token.current_phase === 'calling_report') {
                                 $('#progress-bar').css('width', '60%');
                                 current_phase = "Calling Report";
-                            } else if (response.token.current_phase == 'final_decision') {
+                            } else if (response.token.current_phase === 'final_decision') {
                                 $('#progress-bar').css('width', '80%');
                                 current_phase = "Final Decision";
-                            } else if (response.token.current_phase == 'completed') {
+                            } else if (response.token.current_phase === 'completed') {
                                 $('#progress-bar').css('width', '100%');
                                 current_phase = "Completed";
                             }
 
                             // Populate table with token details
                             $('#resultBody').append(`
-                                <tr data-token-id="${response.token.id}">
-                                    <td>${response.token.token_number}</td>
-                                    <td>${response.token.client.client_number}</td>
-                                    <td>${response.token.client.name}</td>
-                                    <td>${response.token.main_service.service_type.name}</td>
-                                    <td>${response.token.main_service.name}</td>
-                                    <td>${subServiceName}</td>
-                                    <td>
-                                        <span class="badge text-white" style="background-color: ${statusColor};" id="status-badge-${response.token.id}">
-                                            ${statusName}
-                                        </span>
-                                    </td>
-                                    <td>${new Date(response.token.created_at).toLocaleDateString()}</td>
-                                     <td id="current-phase-${response.token.id}">${current_phase}</td>
-                                    <td>
-                                        <a href="" data-toggle="modal" data-target="#updateStatusModal" data-token-id="${response.token.id}" class="btn btn-danger text-center">
-                                            <i class="fas fa-wrench"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            `);
+                    <tr data-token-id="${response.token.id}">
+                        <td>${response.token.token_number}</td>
+                        <td>${response.token.client.client_number}</td>
+                        <td>${response.token.client.name}</td>
+                        <td>${response.token.main_service.service_type.name}</td>
+                        <td>${response.token.main_service.name}</td>
+                        <td>${subServiceName}</td>
+                        <td>
+                            <span class="badge text-white" style="background-color: ${statusColor};" id="status-badge-${response.token.id}">
+                                ${statusName}
+                            </span>
+                        </td>
+                        <td>${new Date(response.token.created_at).toLocaleDateString()}</td>
+                        <td id="current-phase-${response.token.id}">${current_phase}</td>
+                        <td>
+                            <a href="javascript:void(0);"
+                               data-toggle="modal"
+                               data-target="#updateStatusModal"
+                               data-token-id="${response.token.id}"
+                               data-status="${statusName}"
+                               class="btn btn-danger text-center">
+                                <i class="fas fa-wrench"></i>
+                            </a>
+                        </td>
+                    </tr>
+                `);
 
                             $('#work-flow').show();
                             $('#token-id').val(tokenId);
@@ -267,6 +275,12 @@
             $('#updateStatusModal').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget);
                 var tokenId = button.data('token-id');
+                var status = button.data('status');
+
+                if (status !== 'Open') {
+                    event.preventDefault();
+                    return false;
+                }
 
                 var modal = $(this);
                 modal.find('#modal-token-id').val(tokenId);
@@ -314,7 +328,7 @@
                                 progressPercentage = 80;
                             } else if (currentPhase == 'completed') {
                                 progressPercentage = 100;
-                            }else{
+                            } else {
                                 progressPercentage = 0;
                             }
 
@@ -335,12 +349,20 @@
 
             // Document Verification form modal
             $('#verification-form').on('show.bs.modal', function(event) {
-                var tokenId = $('#token-id').val(); // Retrieve token ID
+                var tokenId = $('#token-id').val();
                 var statusId = $('#status_id_one').val();
+                var currentPhaseCell = $('#current-phase-' + tokenId).text();
 
-                // Set the token ID in the form hidden input
-                $(this).find('input[name="token_id"]').val(tokenId);
-                $(this).find('input[name="status_id_one"]').val(statusId);
+                if (currentPhaseCell !== 'Open') {
+                    event.preventDefault();
+                    Swal.fire('Error!', 'You can only access this form when the phase is "Open".', 'error');
+                } else {
+                    var modal = $(this);
+                    modal.find('input[name="token_id"]').val(tokenId);
+                    modal.find('input[name="status_id_one"]').val(statusId);
+
+                    $('#verification-form').modal('show');
+                }
             });
 
             // Document Verification Update
@@ -382,7 +404,7 @@
                                 progressPercentage = 80;
                             } else if (currentPhase == 'completed') {
                                 progressPercentage = 100;
-                            }else{
+                            } else {
                                 progressPercentage = 0;
                             }
 
@@ -402,11 +424,23 @@
             /* calling report form model */
             $('#calling-form').on('show.bs.modal', function(event) {
                 var tokenId = $('#token-id').val();
-                var statusId = $('#status_id_one').val();
+                var statusId = $('#status_id_two').val();
+                var currentPhaseCell = $('#current-phase-' + tokenId).text();
 
-                $(this).find('input[name="token_id"]').val(tokenId);
-                $(this).find('input[name="status_id_one"]').val(statusId);
+                if (currentPhaseCell !== 'Document Verification') {
+                    event.preventDefault();
+                    Swal.fire('Error!',
+                        'You can only access this form when the phase is "Document Verification".',
+                        'error');
+                } else {
+                    var modal = $(this);
+                    modal.find('input[name="token_id"]').val(tokenId);
+                    modal.find('input[name="status_id_two"]').val(statusId);
+
+                    $('#calling-form').modal('show');
+                }
             });
+
 
             /* Calling Report Status Update */
             $('#callingReportsForm').on('submit', function(event) {
@@ -448,7 +482,7 @@
                                 progressPercentage = 80;
                             } else if (currentPhase == 'completed') {
                                 progressPercentage = 100;
-                            }else{
+                            } else {
                                 progressPercentage = 0;
                             }
 
@@ -468,12 +502,27 @@
 
             /* Final Decision form model */
             $('#final-decision-form').on('show.bs.modal', function(event) {
-                var tokenId = $('#token-id').val();
+                var tokenId = $('#token-id').val(); // Get the token ID
+                var currentPhaseCell = $('#current-phase-' + tokenId).text(); // Get the current phase text
+
+                // Check if the current phase is "Calling Report"
+                if (currentPhaseCell !== 'Calling Report') {
+                    event.preventDefault(); // Prevent the modal from opening
+                    Swal.fire('Error!', 'You must complete the "Calling Report" phase before proceeding.',
+                        'error');
+                    return false;
+                }
+
+                // Set token ID and status ID in the modal form inputs if conditions are met
+                var modal = $(this);
                 var statusId = $('#status_id_one').val();
 
-                $(this).find('input[name="token_id"]').val(tokenId);
-                $(this).find('input[name="status_id_one"]').val(statusId);
+                modal.find('input[name="token_id"]').val(tokenId);
+                modal.find('input[name="status_id_one"]').val(statusId);
+
+                $('#final-decision-form').modal('show');
             });
+
 
             /* Final Decision Status Update */
             $('#finalDecisionForm').on('submit', function(event) {
@@ -524,7 +573,7 @@
                                 progressPercentage = 80;
                             } else if (currentPhase == 'completed') {
                                 progressPercentage = 100;
-                            }else{
+                            } else {
                                 progressPercentage = 0;
                             }
 
@@ -586,7 +635,7 @@
 
                                     // Update progress bar
                                     var progressPercentage =
-                                    100; // Completed phase is always 100%
+                                        100; // Completed phase is always 100%
                                     $('#progress-bar').css('width', progressPercentage +
                                         '%');
                                     $('#work-flow').show();

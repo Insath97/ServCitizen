@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request Receipt</title>
+    <title>{{ $request_service->token_number }}</title>
     <style>
         * {
             margin: 0;
@@ -17,6 +17,7 @@
             font-family: 'Courier New', Courier, monospace;
             font-size: 12px; /* Default font size */
             max-width: 80mm; /* Width suitable for thermal printers */
+            height: auto;
             margin: 0;
             padding: 0;
             color: #000;

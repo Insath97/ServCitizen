@@ -9,6 +9,8 @@ use App\Models\Receipt;
 use App\Models\Request as ModelsRequest;
 use Illuminate\Http\Request;
 use Picqer\Barcode\BarcodeGeneratorPNG;
+use Illuminate\Support\Facades\File;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class PaymentController extends Controller
 {
@@ -71,12 +73,11 @@ class PaymentController extends Controller
     {
         $request_service = ModelsRequest::findOrFail($id);
 
+        // Generate receipt number
         $receipt = new Receipt();
-
         $latest_receipt = Receipt::latest('id')->first();
         $latest_receipt_number = $latest_receipt ? $latest_receipt->receipt_number : 0;
         $new_receipt_number = str_pad($latest_receipt_number + 1, 5, '0', STR_PAD_LEFT);
-
         $receipt->receipt_number = $new_receipt_number;
         $receipt->request_id = $request_service->id;
         $receipt->save();
@@ -84,11 +85,9 @@ class PaymentController extends Controller
         // Generate the barcode
         $generator = new BarcodeGeneratorPNG();
         $barcode = $generator->getBarcode($request_service->token_number, $generator::TYPE_CODE_128);
-
-        // Encode the barcode as a base64 string
         $barcodeBase64 = base64_encode($barcode);
 
-        // Pass the barcode and request service data to the view
+        // Pass the token number and other data to the view for printing
         return view('admin.payment.print', compact('request_service', 'barcodeBase64'));
     }
 }
