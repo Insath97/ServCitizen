@@ -107,7 +107,7 @@ class SubServiceController extends Controller
     public function fetchServiceCodes(Request $request)
     {
         $serviceTypeId = $request->input('service_type_id');
-        $codes = MainServiceType::where('service_type_id', $serviceTypeId)->get();
+        $codes = MainServiceType::where('service_type_id', $serviceTypeId)->where('have_sub_service',0)->get();
         return response()->json($codes);
     }
 }

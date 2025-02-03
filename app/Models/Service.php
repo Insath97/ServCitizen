@@ -28,4 +28,9 @@ class Service extends Model
     {
         return $this->hasMany(SubService::class);
     }
+
+    public function main_service()
+    {
+        return $this->belongsTo(MainServiceType::class, 'main_service_type_id');
+    }
 }

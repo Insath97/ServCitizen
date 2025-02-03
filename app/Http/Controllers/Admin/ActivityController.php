@@ -23,7 +23,7 @@ class ActivityController extends Controller
         $service_types = ServiceType::where('delete_status', 1)->get();
         $statuses  = Status::where('delete_status', 1)->get();
         $services = Service::with('branch', 'unit')->where('delete_status', 1)->get();
-        $request_services = ModelsRequest::with(['client', 'service', 'status', 'sub_service'])->where('delete_status', 1)->orderBy('created_at', 'desc')->orderBy('id', 'desc')->get();
+        $request_services = ModelsRequest::with(['client', 'service', 'status', 'sub_service'])->where('delete_status', 1)->where('payment_status','!=' ,'Pending Payment')->orderBy('created_at', 'desc')->orderBy('id', 'desc')->get();
         return view('admin.activity.index', compact('request_services', 'service_types', 'statuses', 'services'));
     }
 
@@ -36,7 +36,7 @@ class ActivityController extends Controller
 
         // Find the token with related client, service, service type, and status
         $token = ModelsRequest::with(['client', 'service', 'service', 'status', 'main_service', 'main_service.service_type', 'sub_service'])
-            ->where('token_number', $request->search)
+            ->where('id', $request->search)
             ->first();
 
         // Check if the token exists
@@ -195,7 +195,6 @@ class ActivityController extends Controller
         }
     }
 
-
     public function updateCompleted(Request $request)
     {
         try {
@@ -242,6 +241,7 @@ class ActivityController extends Controller
             ], 500);
         }
     }
+
 
 
     public function create() {}

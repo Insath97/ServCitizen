@@ -92,118 +92,35 @@
     </div>
 
     <!-- New Request Modal -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="newRequestModal">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">New Service Request</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('admin.service-request.store') }}" method="POST">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="client_name" class="col-form-label font-weight-bold">Client Name</label>
-                                    <input type="text" class="form-control" id="client_name" name="client_name" readonly>
-                                    <input type="hidden" name="client_id" id="client_id">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="client_number" class="col-form-label font-weight-bold">Client Number</label>
-                                    <input type="text" class="form-control" id="client_number" readonly>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="service_type_id" class="col-form-label font-weight-bold">Service
-                                        Type</label>
-                                    <select name="service_type_id" id="service_type_id"
-                                        class="form-control select2 @error('service_id') is-invalid @enderror">
-                                        <option value="">Select a service type</option>
-                                        @foreach ($service_types as $service_type)
-                                            <option value="{{ $service_type->id }}">{{ $service_type->code }} -
-                                                {{ $service_type->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('service_type_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="service_id" class="col-form-label font-weight-bold">Service</label>
-                                    <select name="service_id" id="service_id"
-                                        class="form-control @error('service_id') is-invalid @enderror">
-                                        <option value="" selected>Select a service</option>
-                                    </select>
-                                    @error('service_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-12" id="subservice-container" style="display:none;">
-                                <div class="form-group">
-                                    <label for="subservice_id" class="col-form-label font-weight-bold">Sub Service</label>
-                                    <select name="subservice_id" id="subservice_id"
-                                        class="form-control @error('subservice_id') is-invalid @enderror">
-                                        <option value="" selected>Select a subservice</option>
-                                    </select>
-                                    @error('subservice_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="status_id" class="col-form-label font-weight-bold">Status</label>
-                                    <select name="status_id" id="status_id"
-                                        class="form-control @error('status_id') is-invalid @enderror">
-                                        @foreach ($statuses as $status)
-                                            <option value="{{ $status->id }}">{{ $status->status_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="notes" class="col-form-label font-weight-bold">Notes</label>
-                                    <textarea name="notes" id="notes" class="form-control @error('notes') is-invalid @enderror" rows="4"
-                                        placeholder="Additional notes..."></textarea>
-                                    @error('notes')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                </div>
-
-                <div class="modal-footer bg-whitesmoke br">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Request</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    @include('admin.request.demo-model')
 @endsection
 
 @push('scripts')
     <script>
         $(document).ready(function() {
 
+            /* select 2 select box editable set */
+            $('#newRequestModal').on('shown.bs.modal', function() {
+                $('#service_id').select2({
+                    placeholder: "Select a service",
+                    tags: true,
+                    width: '100%',
+                    dropdownParent: $(
+                        '#newRequestModal'
+                    ) // Attach the dropdown to the modal to avoid conflicts
+                });
+
+                $('#subservice_id').select2({
+                    placeholder: "Select a sub service",
+                    tags: true,
+                    width: '100%',
+                    dropdownParent: $(
+                        '#newRequestModal'
+                    ) // Attach the dropdown to the modal to avoid conflicts
+                });
+            });
+
+            /* search client number or nic get response */
             $('#search-form').on('submit', function(event) {
                 event.preventDefault();
                 var searchQuery = $('#search-input').val();
@@ -304,7 +221,7 @@
                                     <td>${request.main_service.name}</td>
                                     <td>${request.sub_service ? request.sub_service.name : 'N/A'}</td>
                                     <td>${request.status ? `<span class="badge text-white" style="background-color: ${request.status.status_color}">
-                                                            ${request.status.status_name} </span>` : ''}
+                                                                                                                                                            ${request.status.status_name} </span>` : ''}
                                     </td>
                                     <td>${createdAtDate}</td>
                                 </tr>
@@ -322,37 +239,18 @@
                 });
             });
 
-            $('#service_type_id').on('change', function() {
-                let service_type_id = $(this).val();
-
-                $('#service_id').empty();
-
-                $.ajax({
-                    method: 'GET',
-                    url: "{{ route('admin.fetch-service-type') }}",
-                    data: {
-                        service_type_id: service_type_id
-                    },
-                    success: function(data) {
-
-                        $('#service_id').append('<option value="">Select Service</option>');
-
-                        $.each(data, function(index, item) {
-                            $('#service_id').append(
-                                `<option value="${item.id}">${item.code} - ${item.name}</option>`
-                            );
-                        });
-                    },
-                    error: function(data) {
-                        console.log(data);
-                    }
-                });
-            });
-
             $('#service_id').on('change', function() {
                 let service_id = $(this).val();
+                let hasSubService = $('#service_id option:selected').data('has-subservice');
 
-                // Fetch service data based on service_id
+                // Clear previous data when changing service
+                clearFields();
+
+                if (!service_id) {
+                    return; // If no service is selected, exit
+                }
+
+                // Fetch main service data
                 $.ajax({
                     method: 'GET',
                     url: "{{ route('admin.fetch-main-service') }}",
@@ -360,46 +258,129 @@
                         service_id: service_id
                     },
                     success: function(service) {
-                        if (service.have_sub_service === 0) {
-                            // Show subservice container if subservices exist
-                            $('#subservice-container').show();
-
-                            // Fetch subservices for the selected service
-                            $.ajax({
-                                method: 'GET',
-                                url: "{{ route('admin.fetch-subservice') }}",
-                                data: {
-                                    service_id: service_id
-                                },
-                                success: function(subservices) {
-                                    // Clear the subservice select box
-                                    $('#subservice_id').empty();
-                                    $('#subservice_id').append(
-                                        '<option value="" selected>Select a subservice</option>'
-                                    );
-
-                                    // Populate subservice select box with options
-                                    $.each(subservices, function(index,
-                                        subservice) {
-                                        $('#subservice_id').append(
-                                            `<option value="${subservice.id}">${subservice.code} - ${subservice.name}</option>`
-                                        );
-                                    });
-                                },
-                                error: function(error) {
-                                    console.error("Error fetching subservices:",
-                                        error);
-                                }
+                        if (service.have_sub_service === 1) {
+                            // If no sub-services, show service details
+                            $('#subservice_id').prop('disabled', true).select2({
+                                placeholder: "No subservices available",
+                                width: '100%',
+                                dropdownParent: $('#newRequestModal')
                             });
+
+                            fetchServiceData(service_id);
                         } else {
-                            // Hide subservice container if service doesn't have subservices
-                            $('#subservice-container').hide();
+                            // If sub-services exist, populate sub-service select box
+                            $('#subservice_id').prop('disabled', false).select2({
+                                placeholder: "Select a sub-servicet ",
+                                width: '100%',
+                                dropdownParent: $('#newRequestModal')
+                            });
+                            fetchSubServices(service_id);
                         }
                     },
                     error: function(error) {
                         console.error("Error fetching service:", error);
                     }
                 });
+
+            });
+
+            $('#subservice_id').on('change', function() {
+                let subservice_id = $(this).val();
+
+                if (!subservice_id) {
+                    return; // Exit if no sub-service is selected
+                }
+
+                // Clear previous service details
+                clearFields();
+
+                // Fetch sub-service details
+                fetchSubServiceData(subservice_id);
+            });
+
+            // Function to fetch sub-services for a selected service
+            function fetchSubServices(service_id) {
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ route('admin.fetch-subservice') }}",
+                    data: {
+                        service_id: service_id
+                    },
+                    success: function(subservices) {
+                        $('#subservice_id').empty().append(
+                            '<option value="">Select a sub-service</option>');
+
+                        $.each(subservices, function(index, subservice) {
+                            $('#subservice_id').append(
+                                `<option value="${subservice.id}">${subservice.code} - ${subservice.name}</option>`
+                            );
+                        });
+
+                        // Enable sub-service select
+                        $('#subservice_id').prop('disabled', false).select2({
+                            placeholder: "Select a sub service",
+                            width: '100%',
+                            dropdownParent: $('#newRequestModal')
+                        });
+
+                    },
+                    error: function(error) {
+                        console.error("Error fetching subservices:", error);
+                    }
+                });
+            }
+
+            // Function to fetch service data
+            function fetchServiceData(serviceId) {
+                $.ajax({
+                    url: `{{ url('admin/get-services') }}/${serviceId}`,
+                    method: 'GET',
+                    success: function(response) {
+                        let serviceData = response.data[0];
+
+                        if (serviceData) {
+                            $('#newRequestModal').modal('show');
+                            $('#a').val(serviceData.service_type.name || "No Service Type");
+                            $('#b').val(serviceData.fees_type || "No Fees Type");
+                            $('#c').val(serviceData.amount || "No Amount");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching service data:", error);
+                    }
+                });
+            }
+
+            // Function to fetch sub-service data
+            function fetchSubServiceData(subserviceId) {
+                $.ajax({
+                    url: `{{ url('admin/get-sub-services') }}/${subserviceId}`,
+                    method: 'GET',
+                    success: function(response) {
+                        let serviceData = response.data[0];
+
+                        if (serviceData) {
+                            $('#newRequestModal').modal('show');
+                            $('#a').val(serviceData.service_type.name || "No Service Type");
+                            $('#b').val(serviceData.fees_type || "No Fees Type");
+                            $('#c').val(serviceData.amount || "No Amount");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching sub-service data:", error);
+                    }
+                });
+            }
+
+            // Function to clear fields
+            function clearFields() {
+                $('#a, #b, #c').val(""); // Clear fields
+                $('#subservice_id').empty().prop('disabled', true); // Reset sub-service dropdown
+            }
+
+            // Reset fields when modal closes
+            $('#newRequestModal').on('hidden.bs.modal', function() {
+                clearFields();
             });
 
         });

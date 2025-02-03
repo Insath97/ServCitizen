@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\UserRoleController;
 use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\ProvinceController;
+use App\Models\Service;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -95,6 +96,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
     /* request */
     Route::get('fetch-main-service', [ServiceRequestController::class, 'fetchMainService'])->name('fetch-main-service');
     Route::get('fetch-subservice', [ServiceRequestController::class, 'fetchSubService'])->name('fetch-subservice');
+    Route::get('get-services/{id}',[ServiceRequestController::class, 'getServices'])->name('get-services');
+    Route::get('get-sub-services/{id}',[ServiceRequestController::class, 'getsubServices'])->name('get-sub-services');
     Route::get('search-client-request', [ServiceRequestController::class, 'search'])->name('search-client-request');
     Route::get('token-number/{code}', [ServiceRequestController::class, 'printToken'])->name('token-number');
     Route::get('service-request/{id}/print', [ServiceRequestController::class, 'printToken'])->name('service-request.print');

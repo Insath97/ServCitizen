@@ -163,6 +163,12 @@
                             <span>Services</span></a>
                         <ul class="dropdown-menu">
 
+                            @if (canAccess(['Service Type Index', 'Service Type Create', 'Service Type Update', 'Service Type Delete']))
+                                <li class="{{ setSidebarActive(['admin.service-type.*']) }}">
+                                    <a class="nav-link" href="{{ route('admin.service-type.index') }}">Service Type</a>
+                                </li>
+                            @endif
+
                             @if (canAccess(['Service Index', 'Service Create', 'Service Update', 'Service Delete']))
                                 <li class="{{ setSidebarActive(['admin.services.*']) }}">
                                     <a class="nav-link" href="{{ route('admin.services.index') }}">Service</a>
@@ -175,11 +181,7 @@
                                 </li>
                             @endif
 
-                            @if (canAccess(['Service Type Index', 'Service Type Create', 'Service Type Update', 'Service Type Delete']))
-                                <li class="{{ setSidebarActive(['admin.service-type.*']) }}">
-                                    <a class="nav-link" href="{{ route('admin.service-type.index') }}">Service Type</a>
-                                </li>
-                            @endif
+
 
                             @if (canAccess(['Status Index', 'Status Create', 'Status Update', 'Status Delete']))
                                 <li class="{{ setSidebarActive(['admin.services-status.*']) }}">

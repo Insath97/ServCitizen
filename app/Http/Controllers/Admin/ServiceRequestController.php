@@ -30,7 +30,6 @@ class ServiceRequestController extends Controller
         $service_types = ServiceType::where('delete_status', 1)->get();
         $statuses  = Status::where(['status_name' => 'Open', 'delete_status' => 1])->get();
         $services = Service::with('branch', 'unit')->where('delete_status', 1)->get();
-
         $request_services = ModelsRequest::with([
             'client',
             'service',
@@ -56,7 +55,8 @@ class ServiceRequestController extends Controller
         $services = Service::with('branch', 'unit')->where('delete_status', 1)->get();
         $statuses  = Status::where(['status_name' => 'Open', 'delete_status' => 1])->get();
         $request_services = ModelsRequest::with(['client', 'service', 'status'])->where('delete_status', 1)->orderBy('created_at', 'desc')->orderBy('id', 'desc')->get();
-        return view('admin.request.create', compact('clients', 'services', 'statuses', 'service_types', 'request_services'));
+        $main_services = MainServiceType::orderBy('name', 'asc')->get();
+        return view('admin.request.create', compact('clients', 'services', 'statuses', 'service_types', 'request_services', 'main_services'));
     }
 
     public function store(RequestCreateRequest $request)
@@ -176,5 +176,25 @@ class ServiceRequestController extends Controller
     {
         $sub_service = SubService::where(['main_service_type_id' => $request->service_id])->get();
         return response()->json($sub_service);
+    }
+
+    public function getServices(string $id)
+    {
+        $service = Service::with('service_type')->where('main_service_type_id', $id)->where('delete_status', 1)->get();
+
+        if (!$service) {
+            return response()->json([], 404);
+        }
+        return response()->json(['data' => $service]);
+    }
+
+    public function getsubServices(string $id)
+    {
+        $sub_service = SubService::with('service_type')->where('id', $id)->where('delete_status', 1)->get();
+
+        if (!$sub_service) {
+            return response()->json([], 404);
+        }
+        return response()->json(['data' => $sub_service]);
     }
 }

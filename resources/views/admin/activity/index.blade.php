@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <form id="search-form">
 
-                        <div class="form-group">
+                        {{--  <div class="form-group">
                             <label>Token Number</label>
                             <input type="text" name="search" id="search-input"
                                 class="form-control @error('search') is-invalid @enderror"
@@ -29,6 +29,16 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-search"></i> Search
                             </button>
+                        </div> --}}
+
+                        <div class="form-group">
+                            <select name="search" id="search-select-input" class="form-control select2">
+                                <option value="">Search by Token Number</option>
+                                @foreach ($request_services as $item)
+                                    <option value="{{ $item->id }}">{{ $item->token_number }}</option>
+                                @endforeach
+
+                            </select>
                         </div>
 
                     </form>
@@ -161,6 +171,12 @@
     <script>
         $(document).ready(function() {
 
+            $('#search-select-input').select2({
+                placeholder: "Search by Token Number",
+                tags: true,
+                width: '100%'
+            });
+
             // Hide the workflow section by default
             $('#work-flow').hide();
 
@@ -173,10 +189,13 @@
             });
 
             // Search form submission
-            $('#search-form').on('submit', function(event) {
+            $('#search-select-input').on('change', function(event) {
                 event.preventDefault();
 
-                var searchQuery = $('#search-input').val().trim();
+                var searchQuery = $(this).val();
+
+                console.log(searchQuery);
+
 
                 // Client-side validation
                 if (searchQuery === '') {
@@ -488,6 +507,7 @@
 
                             $('#progress-bar').css('width', progressPercentage + '%');
                             $('#work-flow').show();
+                            $('#calling-form').modal('hide');
                         } else {
                             Swal.fire('Error!', response.message, 'error');
                         }

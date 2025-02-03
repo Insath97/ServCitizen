@@ -38,9 +38,12 @@ class ServicesController extends Controller
 
     public function fetchType(Request $request)
     {
-        /* $service_type = Service::where(['service_type_id' => $request->service_type_id, 'delete_status' => 1])->get(); */
-        $service_type = MainServiceType::where(['service_type_id' => $request->service_type_id])->get();
-        return $service_type;
+        $main_service_type = MainServiceType::where(['id' => $request->service_id])->get();
+
+        if($main_service_type->have_sub_service == 1){
+
+        }
+        return $main_service_type;
     }
 
     public function create()
@@ -64,6 +67,7 @@ class ServicesController extends Controller
             $service->service_type_id = $request->service_type;
             $service->code = $request->service_code;
             $service->name = $request->name;
+            $service->main_service_type_id = $main_service->id;
             $service->branch_id = $request->branch_id;
             $service->unit_id = $request->unit_id;
             $service->fees_type = $request->fees_type;
