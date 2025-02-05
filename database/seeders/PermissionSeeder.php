@@ -28,16 +28,10 @@ class PermissionSeeder extends Seeder
             ['name' => 'Client Delete', 'group_name' => 'Client Permissions'],
 
             /* services */
-            ['name' => 'Service  Index',  'group_name' => 'Service Permissions'],
-            ['name' => 'Service  Create', 'group_name' => 'Service Permissions'],
-            ['name' => 'Service  Update', 'group_name' => 'Service Permissions'],
-            ['name' => 'Service  Delete', 'group_name' => 'Service Permissions'],
-
-            /* service type */
-            ['name' => 'Service Type Index',  'group_name' => 'Service Type Permissions'],
-            ['name' => 'Service Type Create', 'group_name' => 'Service Type Permissions'],
-            ['name' => 'Service Type Update', 'group_name' => 'Service Type Permissions'],
-            ['name' => 'Service Type Delete', 'group_name' => 'Service Type Permissions'],
+            ['name' => 'Service Index',  'group_name' => 'Service Permissions'],
+            ['name' => 'Service Create', 'group_name' => 'Service Permissions'],
+            ['name' => 'Service Update', 'group_name' => 'Service Permissions'],
+            ['name' => 'Service Delete', 'group_name' => 'Service Permissions'],
 
             /* service type */
             ['name' => 'Service Type Index',  'group_name' => 'Service Type Permissions'],
