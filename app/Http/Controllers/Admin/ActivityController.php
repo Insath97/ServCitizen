@@ -54,8 +54,9 @@ class ActivityController extends Controller
     }
 
     public function updateStatus(Request $request)
-    {
+    { 
         try {
+
             $update_request_status = ModelsRequest::findOrFail($request->token_id);
             $update_request_status->status_id = $request->ticket_status;
             $update_request_status->current_phase = 'open';

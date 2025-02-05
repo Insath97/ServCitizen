@@ -1,5 +1,5 @@
 {{-- update status model --}}
-<div class="modal fade" id="updateStatusModal" tabindex="-1" role="dialog" aria-labelledby="updateStatusModalLabel"
+<div class="modal fade" id="open-form" tabindex="-1" role="dialog" aria-labelledby="updateStatusModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -11,9 +11,12 @@
             </div>
             <div class="modal-body">
                 <form id="updateStatusForm" method="POST">
-                    @csrf
-                    <input type="hidden" id="modal-token-id" name="token_id">
 
+                    @csrf
+
+                    <input type="hidden" id="modal-token-id" name="token_id">
+                    <input type="hidden" name="status_id_one" id="status_id_one">
+                    <input type="hidden" name="status_name" id="status_name">
 
                     <div class="form-group">
                         <label for="modal-ticket-status">Ticket Status</label>

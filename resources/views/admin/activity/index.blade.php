@@ -57,7 +57,7 @@
                                     <th>Token Status</th>
                                     <th>Created Date</th>
                                     <th>Current Phase</th>
-                                    <th>Update Status</th>
+
                                 </tr>
                             </thead>
                             <tbody id="resultBody">
@@ -114,9 +114,13 @@
                             <div class="progress-wrapper">
                                 <div class="progress-indicator">
                                     <div class="stepper-wrapper">
-                                        <div class="stepper-item active" data-target="#open-form">
+                                        {{--  <div class="stepper-item active" data-target="#open">
                                             <div class="step-counter">1</div>
                                             <div class="step-name">Open</div>
+                                        </div> --}}
+                                        <div class="stepper-item active" data-toggle="modal" data-target="#open-form">
+                                            <div class="step-counter">1</div>
+                                            <div class="step-name">Working in Progress</div>
                                         </div>
                                         <div class="stepper-item" data-toggle="modal" data-target="#verification-form"
                                             style="cursor: pointer;">
@@ -259,22 +263,14 @@
                         </td>
                         <td>${new Date(response.token.created_at).toLocaleDateString()}</td>
                         <td id="current-phase-${response.token.id}">${current_phase}</td>
-                        <td>
-                            <a href="javascript:void(0);"
-                               data-toggle="modal"
-                               data-target="#updateStatusModal"
-                               data-token-id="${response.token.id}"
-                               data-status="${statusName}"
-                               class="btn btn-danger text-center">
-                                <i class="fas fa-wrench"></i>
-                            </a>
-                        </td>
+
                     </tr>
                 `);
-
+                            $('#modal-token-id').val(tokenId);
                             $('#work-flow').show();
                             $('#token-id').val(tokenId);
                             $('#status_id_one').val(status_id);
+                            $('#status_name').val(statusName)
                             $('#token-id-com').val(tokenId);
                         } else {
                             $('#noDataMessage').show();
@@ -291,25 +287,43 @@
             });
 
             // Open update status modal
-            $('#updateStatusModal').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget);
-                var tokenId = button.data('token-id');
-                var status = button.data('status');
+            $('#open-form').on('show.bs.modal', function(event) {
+                var tokenId = $('#modal-token-id').val();
 
-                if (status !== 'Open') {
+                if (tokenId === null || tokenId === '') {
+                    Swal.fire('Warning!', 'No token selected.', 'warning');
                     event.preventDefault();
                     return false;
                 }
 
+                var status = $('#status_id_one').val();
+                var status_name = $('#status_name').val();
+                var currentPhaseCell = $('#current-phase-' + tokenId).text();
+
+                console.log(currentPhaseCell, status_name, status, tokenId);
+
+
+
                 var modal = $(this);
-                modal.find('#modal-token-id').val(tokenId);
+                modal.find('input[name="modal-token-id"]').val(tokenId);
+
+
             });
 
             // Handle status form submission inside modal
             $('#updateStatusForm').on('submit', function(event) {
                 event.preventDefault();
 
+                var tokenId = $('#token-id').val();
+                console.log("Token ID:", tokenId);
+
+                if (!tokenId) {
+                    Swal.fire('Error!', 'Token ID is missing.', 'error');
+                    return;
+                }
+
                 var formData = $(this).serialize();
+                console.log("Form Data:", formData);
 
                 $.ajax({
                     url: "{{ route('admin.update-status') }}",
@@ -317,54 +331,59 @@
                     data: formData,
                     success: function(response) {
                         if (response.success) {
-                            $('#updateStatusModal').modal('hide');
-                            Swal.fire('Success!', response.message, 'success');
+                            Swal.fire({
+                                title: 'Success!',
+                                text: response.message,
+                                icon: 'success',
+                                timer: 1500,
+                                showConfirmButton: false
+                            }).then(() => {
+                                $('#open-form').modal('hide'); // Close modal
+                            });
 
                             var tokenId = $('#modal-token-id').val();
                             var statusText = $('#modal-ticket-status option:selected').text();
                             var statusColor = $('#modal-ticket-status option:selected').data(
                                 'color');
 
-                            var statusBadge = $('#status-badge-' + tokenId);
-                            statusBadge.text(statusText);
-                            statusBadge.css('background-color', statusColor);
+                            $('#status-badge-' + tokenId).text(statusText).css(
+                                'background-color', statusColor);
+                            $('#current-phase-' + tokenId).text('Open');
 
-                            var newPhaseText = 'Open';
-                            var currentPhaseCell = $('#current-phase-' + tokenId);
-                            currentPhaseCell.text(newPhaseText);
-
-                            // Update the progress bar
-                            var currentPhase = response.data.current_phase;
-                            var progressPercentage = 0;
-
-                            if (currentPhase == 'open') {
-                                progressPercentage = 20;
-                            } else if (currentPhase == 'document_verification') {
-                                progressPercentage = 40;
-                            } else if (currentPhase == 'calling_report') {
-                                progressPercentage = 60;
-                            } else if (currentPhase == 'final_decision') {
-                                progressPercentage = 80;
-                            } else if (currentPhase == 'completed') {
-                                progressPercentage = 100;
-                            } else {
-                                progressPercentage = 0;
-                            }
+                            // Update progress bar
+                            var progressPercentage = {
+                                'open': 20,
+                                'document_verification': 40,
+                                'calling_report': 60,
+                                'final_decision': 80,
+                                'completed': 100
+                            } [response.data.current_phase] || 0;
 
                             $('#progress-bar').css('width', progressPercentage + '%');
-
-                            $('#work-flow').show(); // Ensure workflow section is visible
+                            $('#work-flow').show();
                         } else {
-                            Swal.fire('Error!', response.message, 'error');
-                            $('#work-flow').hide(); // Hide workflow section on error
+                            Swal.fire('Error!', response.message, 'error').then(() => {
+                                $('#updateStatusModal').modal(
+                                    'hide'); // Close modal on error
+                            });
+                            $('#work-flow').hide();
                         }
                     },
                     error: function(xhr) {
-                        Swal.fire('Error!', 'Failed to update status. Please try again.',
-                            'error');
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Failed to update status. Please try again.',
+                            icon: 'error',
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            $('#open-form').modal('hide'); // Close modal
+                        });
                     }
                 });
+
             });
+
 
             // Document Verification form modal
             $('#verification-form').on('show.bs.modal', function(event) {

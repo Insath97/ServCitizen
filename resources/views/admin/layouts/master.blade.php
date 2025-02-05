@@ -79,8 +79,12 @@
         }
 
         /* Custom colors for each step */
-        .stepper-item[data-target="#open-form"] .step-counter {
+        .stepper-item[data-target="#open"] .step-counter {
             background-color: #1d1ce5;
+        }
+
+        .stepper-item[data-target="#open-form"] .step-counter {
+            background-color: #62ec7a;
         }
 
         .stepper-item[data-target="#verification-form"] .step-counter {
