@@ -38,12 +38,13 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $role->name }}</td>
                                         <td class="w-50">
-                                            @foreach ($role->permissions as $permission)
-                                                <span class="badge badge-primary mb-1">{{ $permission->name }}</span>
-                                            @endforeach
 
                                             @if ($role->name === 'Super Admin')
                                                 <span class="badge badge-info">All Permissions</span>
+                                            @else
+                                                @foreach ($role->permissions as $permission)
+                                                    <span class="badge badge-primary mb-1">{{ $permission->name }}</span>
+                                                @endforeach
                                             @endif
                                         </td>
                                         <td>
