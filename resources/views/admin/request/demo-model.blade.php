@@ -89,12 +89,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="status_id" class="col-form-label font-weight-bold">Status</label>
-                                <select name="status_id" id="status_id" disabled
-                                    class="form-control @error('status_id') is-invalid @enderror">
-                                    @foreach ($statuses as $status)
-                                        <option value="{{ $status->id }}">{{ $status->status_name }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" readonly value="{{ $statuses[0]->status_name }}">
+                                <input type="hidden" name="status_id" id="status_id" value="{{ $statuses[0]->id }}">
                             </div>
                         </div>
 
@@ -108,6 +104,7 @@
                                 @enderror
                             </div>
                         </div>
+
                     </div>
             </div>
 
