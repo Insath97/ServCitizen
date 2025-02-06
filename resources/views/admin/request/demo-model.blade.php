@@ -67,22 +67,29 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="client_number" class="col-form-label font-weight-bold">Branch</label>
+                                <input type="text" class="form-control" id="branch" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
                                 <label for="client_number" class="col-form-label font-weight-bold">Fees Type</label>
                                 <input type="text" class="form-control" id="b" readonly>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="client_number" class="col-form-label font-weight-bold">Amount</label>
                                 <input type="text" class="form-control" id="c" readonly>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="status_id" class="col-form-label font-weight-bold">Status</label>
-                                <select name="status_id" id="status_id"
+                                <select name="status_id" id="status_id" disabled
                                     class="form-control @error('status_id') is-invalid @enderror">
                                     @foreach ($statuses as $status)
                                         <option value="{{ $status->id }}">{{ $status->status_name }}</option>

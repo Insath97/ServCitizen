@@ -221,7 +221,7 @@
                                     <td>${request.main_service.name}</td>
                                     <td>${request.sub_service ? request.sub_service.name : 'N/A'}</td>
                                     <td>${request.status ? `<span class="badge text-white" style="background-color: ${request.status.status_color}">
-                                                                                                                                                            ${request.status.status_name} </span>` : ''}
+                                                                                                                                                                ${request.status.status_name} </span>` : ''}
                                     </td>
                                     <td>${createdAtDate}</td>
                                 </tr>
@@ -341,6 +341,7 @@
                         if (serviceData) {
                             $('#newRequestModal').modal('show');
                             $('#a').val(serviceData.service_type.name || "No Service Type");
+                            $('#branch').val(serviceData.branch.name || "No Branch");
                             $('#b').val(serviceData.fees_type || "No Fees Type");
                             $('#c').val(serviceData.amount || "No Amount");
                         }
@@ -362,6 +363,7 @@
                         if (serviceData) {
                             $('#newRequestModal').modal('show');
                             $('#a').val(serviceData.service_type.name || "No Service Type");
+                            $('#branch').val(serviceData.branch.name || "No Branch");
                             $('#b').val(serviceData.fees_type || "No Fees Type");
                             $('#c').val(serviceData.amount || "No Amount");
                         }
@@ -374,7 +376,7 @@
 
             // Function to clear fields
             function clearFields() {
-                $('#a, #b, #c').val(""); // Clear fields
+                $('#a, #b, #c, #branch').val(""); // Clear fields
                 $('#subservice_id').empty().prop('disabled', true); // Reset sub-service dropdown
             }
 

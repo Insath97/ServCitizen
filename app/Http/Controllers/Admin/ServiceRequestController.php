@@ -180,7 +180,7 @@ class ServiceRequestController extends Controller
 
     public function getServices(string $id)
     {
-        $service = Service::with('service_type')->where('main_service_type_id', $id)->where('delete_status', 1)->get();
+        $service = Service::with('service_type','branch')->where('main_service_type_id', $id)->where('delete_status', 1)->get();
 
         if (!$service) {
             return response()->json([], 404);
@@ -190,7 +190,7 @@ class ServiceRequestController extends Controller
 
     public function getsubServices(string $id)
     {
-        $sub_service = SubService::with('service_type')->where('id', $id)->where('delete_status', 1)->get();
+        $sub_service = SubService::with('service_type','branch')->where('id', $id)->where('delete_status', 1)->get();
 
         if (!$sub_service) {
             return response()->json([], 404);
