@@ -15,10 +15,10 @@ class UserRoleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:	User Role Index,admin'])->only(['index']);
-        $this->middleware(['permission:	User Role Create,admin'])->only(['create', 'store']);
-        $this->middleware(['permission:	User Role Update,admin'])->only(['edit', 'update']);
-        $this->middleware(['permission:	User Role Delete,admin'])->only('destroy');
+        $this->middleware(['permission:User Role Index,admin'])->only(['index']);
+        $this->middleware(['permission:User Role Create,admin'])->only(['create', 'store']);
+        $this->middleware(['permission:User Role Update,admin'])->only(['edit', 'update']);
+        $this->middleware(['permission:User Role Delete,admin'])->only('destroy');
     }
 
     public function index()
