@@ -22,7 +22,7 @@ class ServiceTypeCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'service_type_code' => ['required','max_digits:3','unique:service_types,code'],
+            'service_type_code' => ['required','max:255','unique:service_types,code'],
             'service_type' => ['required','string','max:255','unique:service_types,name']
         ];
     }
