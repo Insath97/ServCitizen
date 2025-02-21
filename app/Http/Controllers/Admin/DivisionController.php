@@ -72,8 +72,7 @@ class DivisionController extends Controller
     {
         try {
             $division = Division::findOrFail($id);
-            $division->delete_status = 0;
-            $division->save();
+            $division->delete();
 
             return response(['status' => 'success', 'message' => 'Divisional Secretariat Delete Successfully']);
         } catch (\Throwable $th) {

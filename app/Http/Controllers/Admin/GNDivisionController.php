@@ -67,9 +67,8 @@ class GNDivisionController extends Controller
     {
         try {
             $gn_division = GNDivision::findOrFail($id);
-            $gn_division->delete_status = 0;
-            $gn_division->save();
-
+            $gn_division->delete();
+            
             return response(['status' => 'success', 'message' => 'GN Division Delete Successfully']);
         } catch (\Throwable $th) {
             return response(['status' => 'error', 'message' => $th->getMessage()]);

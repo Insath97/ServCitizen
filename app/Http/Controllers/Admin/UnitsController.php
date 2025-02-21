@@ -61,8 +61,8 @@ class UnitsController extends Controller
         try {
 
             $unit = Unit::findOrFail($id);
-            $unit->status = 0;
-            $unit->save();
+            $unit->delete();
+            
 
             return response(['status' => 'success', 'message' => 'Sub unit Delete Successfully']);
         } catch (\Throwable $th) {

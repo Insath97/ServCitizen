@@ -56,8 +56,7 @@ class ProvinceController extends Controller
     {
         try {
             $province = Province::findOrFail($id);
-            $province->delete_status = 0;
-            $province->save();
+            $province->delete();
 
             return response(['status' => 'success', 'message' => 'Province Delete Successfully']);
         } catch (\Throwable $th) {

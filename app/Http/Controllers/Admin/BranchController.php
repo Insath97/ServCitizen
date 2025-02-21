@@ -59,9 +59,8 @@ class BranchController extends Controller
         try {
 
             $branch = Branch::findOrFail($id);
-            $branch->status = 0;
-            $branch->save();
-
+            $branch->delete();
+            
             return response(['status' => 'success', 'message' => 'Branch Delete Successfully']);
         } catch (\Throwable $th) {
             return response(['status' => 'error', 'message' => $th->getMessage()]);

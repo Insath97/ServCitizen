@@ -66,8 +66,7 @@ class DistrictController extends Controller
         try {
 
             $district = District::findOrFail($id);
-            $district->delete_status = 0;
-            $district->save();
+            $district->delete();
 
             return response(['status' => 'success', 'message' => 'District Delete Successfully']);
         } catch (\Throwable $th) {
