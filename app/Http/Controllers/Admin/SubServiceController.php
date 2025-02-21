@@ -95,8 +95,7 @@ class SubServiceController extends Controller
     {
         try {
             $sub_service = SubService::findOrFail($id);
-            $sub_service->delete_status = 0;
-            $sub_service->save();
+            $sub_service->delete();
 
             return response(['status' => 'success', 'message' => 'Sub Service Delete Successfully']);
         } catch (\Throwable $th) {

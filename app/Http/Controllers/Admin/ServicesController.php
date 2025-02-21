@@ -140,8 +140,7 @@ class ServicesController extends Controller
     {
         try {
             $service = Service::findOrFail($id);
-            $service->delete_status = 0;
-            $service->save();
+            $service->delete();
 
             return response(['status' => 'success', 'message' => 'Service Delete Successfully']);
         } catch (\Throwable $th) {

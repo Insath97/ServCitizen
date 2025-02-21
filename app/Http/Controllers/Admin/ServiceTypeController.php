@@ -57,8 +57,7 @@ class ServiceTypeController extends Controller
     {
         try {
             $service_type = ServiceType::findOrFail($id);
-            $service_type->delete_status = 0;
-            $service_type->save();
+            $service_type->delete();
 
             return response(['status' => 'success', 'message' => 'Service Type Delete Successfully']);
         } catch (\Throwable $th) {
