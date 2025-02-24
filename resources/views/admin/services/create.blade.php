@@ -163,11 +163,23 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection`
 
 @push('scripts')
     <script>
         $(document).ready(function() {
+
+            $('form').on('submit', function(e) {
+                // Check if subservice fields are visible
+                if ($('#subservice-fields').is(':visible')) {
+                    // Check if r_time_type is selected
+                    if (!$('input[name="r_time_type"]:checked').val()) {
+                        alert('Please select a Resolution Time Type (Minutes, Hours, or Days).');
+                        e.preventDefault(); // Prevent form submission
+                        return false;
+                    }
+                }
+            });
 
             $('input[name="has_subservices"]').on('change', function() {
                 let value = $(this).val();
