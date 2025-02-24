@@ -116,7 +116,7 @@ class ServicesController extends Controller
             $service->r_time = $request->r_time;
             $service->save();
 
-            $main_service = MainServiceType::findOrFail($request->service_code);
+            $main_service = MainServiceType::findOrFail($service->main_service_type_id);
             $main_service->service_type_id = $request->service_type;
             $main_service->code = $request->service_code;
             $main_service->name = $request->name;
@@ -144,7 +144,7 @@ class ServicesController extends Controller
             if ($main_service) {
                 $main_service->delete();
             }
-            
+
             // Delete the service
             $service->delete();
 
