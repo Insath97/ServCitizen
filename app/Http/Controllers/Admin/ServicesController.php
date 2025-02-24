@@ -40,8 +40,7 @@ class ServicesController extends Controller
     {
         $main_service_type = MainServiceType::where(['id' => $request->service_id])->get();
 
-        if($main_service_type->have_sub_service == 1){
-
+        if ($main_service_type->have_sub_service == 1) {
         }
         return $main_service_type;
     }
@@ -140,6 +139,13 @@ class ServicesController extends Controller
     {
         try {
             $service = Service::findOrFail($id);
+
+            $main_service = MainServiceType::find($service->main_service_type_id);
+            if ($main_service) {
+                $main_service->delete();
+            }
+            
+            // Delete the service
             $service->delete();
 
             return response(['status' => 'success', 'message' => 'Service Delete Successfully']);

@@ -39,6 +39,7 @@ class ServicesUpdateRequest extends FormRequest
                     }
                 }
             ],
+            'r_time_type' => ['required'],
             'r_time' => ['required', 'integer']
         ];
     }

@@ -37,6 +37,7 @@ class ServicesCreateRequest extends FormRequest
                     }
                 }
             ],
+            'r_time_type' => ['required_if:has_subservices,1'],
             'r_time' => ['required_if:has_subservices,1', 'integer'], // required if has_subservices is 1
         ];
 
@@ -47,6 +48,7 @@ class ServicesCreateRequest extends FormRequest
             $rules['fees_type'] = ['nullable'];
             $rules['amount'] = ['nullable'];
             $rules['r_time'] = ['nullable'];
+            $rules['r_time_type'] = ['nullable'];
         }
 
         return $rules;
